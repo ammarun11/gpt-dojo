@@ -1,4 +1,4 @@
-intel-tensorflow
+tensorflow
 transformers
 tensorflow_probability
 jinja2

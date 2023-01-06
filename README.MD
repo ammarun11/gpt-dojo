@@ -33,13 +33,13 @@ python app.py
 1. Build container (uncomment launch call in app.py)
 
 ```
-docker build --tag palopalepalo/chat-gpt-dojo:v1 .
+docker build --tag palopalepalo/gpt2-text-generator:v1 .
 ```
 
 2. Run container
 
 ```
-docker run -it -d --name chat-gpt -p 7100:7100  palopalepalo/chat-gpt-dojo:v1
+docker run -it -d --name gpt2-text-generator -p 7200:7200  palopalepalo/gpt2-text-generator:v1
 ```
 
 ## Structure
@@ -52,3 +52,20 @@ docker run -it -d --name chat-gpt -p 7100:7100  palopalepalo/chat-gpt-dojo:v1
 ├── README.md
 └── requirements.txt
 ```
+
+
+
+2023-01-06 18:15:48.793989: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-01-06 18:15:49.005646: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2023-01-06 18:15:49.005707: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2023-01-06 18:15:50.376223: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory
+2023-01-06 18:15:50.376506: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory
+2023-01-06 18:15:50.376563: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+Downloading: 100% 1.04M/1.04M [00:00<00:00, 1.43MB/s]
+Downloading: 100% 456k/456k [00:00<00:00, 1.12MB/s]
+Downloading: 100% 665/665 [00:00<00:00, 344kB/s]
+Traceback (most recent call last):
+  File "app.py", line 6, in <module>
+    model = TFGPT2LMHeadModel.from_ptretrained("gpt2, pad_token_id=tokenizer.eos_token_id")
+AttributeError: type object 'TFGPT2LMHeadModel' has no attribute 'from_ptretrained'

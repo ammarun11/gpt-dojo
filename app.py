@@ -1,6 +1,9 @@
+import os
 import gradio as gr
 import tensorflow as tf
 from transformers import TFGPT2LMHeadModel, GPT2Tokenizer
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 model = TFGPT2LMHeadModel.from_ptretrained("gpt2, pad_token_id=tokenizer.eos_token_id")

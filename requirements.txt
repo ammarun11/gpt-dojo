@@ -1,5 +1,14 @@
-tensorflow
+#tensorflow
 transformers
-tensorflow_probability
+#tensorflow_probability
 jinja2
 gradio
+# pip 
+# six 
+# numpy 
+# wheel 
+# setuptools 
+# mock 
+# future==0.17.1
+# keras_applications==1.0.6 --no-deps
+# keras_preprocessing==1.0.5 --no-deps

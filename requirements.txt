@@ -1,6 +1,6 @@
-#tensorflow
+tensorflow
 transformers
-#tensorflow_probability
+tensorflow_probability
 jinja2
 gradio
 # pip 

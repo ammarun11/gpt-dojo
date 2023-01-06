@@ -1,6 +1,6 @@
 FROM python:3.7-slim
 
-WORKDIR /usr/src/chatgpt
+WORKDIR /usr/src/gpt2
 
 COPY requirements.txt ./
 

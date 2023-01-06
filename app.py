@@ -1,58 +1,17 @@
-import os
-import openai
 import gradio as gr
+import tensorflow as tf
+from transformers import TFGPT2LMHeadModel, GPT2Tokenizer
 
-#if you have OpenAI API key as an environment variable, enable the below
-#openai.api_key = os.getenv("OPENAI_API_KEY")
+tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+model = TFGPT2LMHeadModel.from_ptretrained("gpt2, pad_token_id=tokenizer.eos_token_id")
 
-#if you have OpenAI API key as a string, enable the below
-openai.api_key = "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"
+def generate_text(inp):
+    input_ids = tokenizer.encode(inp, return_tensors='tf')
+    beam_output = model.generate(input_ids, max_lenth=100, num_beams=5, no_repeat_ngram_size=2, early_stopping=True)
+    output = tokenizer.decode(beam_output[0], skip_special_tokens=True, clean_up_tokenization_spaces=True)
+    return ".".join(output.split(".")[:-1]) + "."
 
-start_sequence = "\nAI:"
-restart_sequence = "\nHuman: "
+output_text = gr.outputs.Textbox()
+iface = gr.Interface(generate_text, "textbox", output_text, tittle= "GPT-2", description= "OpenAI's GPT-2 is an unsupervised language model that can generate coherent text")
 
-prompt = "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: "
-
-def openai_create(prompt):
-
-    response = openai.Completion.create(
-    model="text-davinci-003",
-    prompt=prompt,
-    temperature=0.9,
-    max_tokens=150,
-    top_p=1,
-    frequency_penalty=0,
-    presence_penalty=0.6,
-    stop=[" Human:", " AI:"]
-    )
-
-    return response.choices[0].text
-
-def chatgpt_clone(input, history):
-    history = history or []
-    s = list(sum(history, ()))
-    s.append(input)
-    inp = ' '.join(s)
-    output = openai_create(inp)
-    history.append((input, output))
-    return history, history
-
-
-block = gr.Blocks()
-
-
-with block:
-    gr.Markdown("""<h1><center>Build Yo'own ChatGPT with OpenAI API & Gradio Tested by: Ammar</center></h1>
-    """)
-    chatbot = gr.Chatbot()
-    message = gr.Textbox(placeholder=prompt)
-    state = gr.State()
-    submit = gr.Button("SEND")
-    submit.click(chatgpt_clone, inputs=[message, state], outputs=[chatbot, state])
-
-# block.launch(debug = True)
-
-# Use this config when running on Docker
-block.launch(server_name="0.0.0.0", server_port=7100)
-
-
+iface.launch(server_name="0.0.0.0", server_port=7200)

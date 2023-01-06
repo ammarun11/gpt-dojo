@@ -39,7 +39,7 @@ docker build --tag palopalepalo/chat-gpt-dojo:v1 .
 2. Run container
 
 ```
-docker run -it -d --name chat-gpt -p 7000:7000  palopalepalo/chat-gpt-dojo:v1
+docker run -it -d --name chat-gpt -p 7100:7100  palopalepalo/chat-gpt-dojo:v1
 ```
 
 ## Structure

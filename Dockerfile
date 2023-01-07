@@ -1,6 +1,6 @@
 FROM python:3.7-slim
 
-WORKDIR /usr/src/gpt2
+WORKDIR /usr/src/gpt-neo
 
 COPY requirements.txt ./
 

@@ -33,13 +33,13 @@ python app.py
 1. Build container (uncomment launch call in app.py)
 
 ```
-docker build --tag palopalepalo/gpt-neo-text-generator:v1 .
+docker build --tag palopalepalo/gpt-neo-text-generator:v1.1 .
 ```
 
 2. Run container
 
 ```
-docker run -it -d --name gpt-neo-text-generator -p 7300:7300  palopalepalo/gpt-neo-text-generator:v1
+docker run -it -d --name gpt-neo-text-generator -p 7300:7300  palopalepalo/gpt-neo-text-generator:v1.1
 ```
 
 ## Structure

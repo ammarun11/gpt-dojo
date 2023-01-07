@@ -1,19 +1,25 @@
 import gradio as gr
+from transformers import pipeline
 
-title = "gpt-neo-1.3B"
+generator = pipeline('text-generation', model='EleutherAI/gpt-neo-1.3B')
+#generator("EleutherAI has", do_sample=True, min_length=50)
 
-my_examples = [
-    ["The tower is 324 metres (1,063 ft) tall,"],
+
+def generate(text):
+    result = generator(text, max_length=30, num_return_sequences=1)
+    # result = generator("EleutherAI has", do_sample=True, min_length=50)
+    return result[0]["generated_text"]
+
+examples = [
     ["The Moon's orbit around Earth has"],
     ["The smooth Borealis basin in the Northern Hemisphere covers 40%"],
 ]
 
-demo = gr.Interface.load(
-    "huggingface/EleutherAI/gpt-neo-1.3B",
-    inputs=gr.Textbox(lines=5, max_lines=6, label="Input Text"),
-    title="Ammar Test gpt-neo-1.3B",
-    examples = my_examples,
+demo = gr.Interface(
+    fn=generate,
+    inputs=gr.inputs.Textbox(lines=5, label="Input Text"),
+    outputs=gr.outputs.Textbox(label="Generated Text"),
+    examples=examples
 )
 
-demo.launch(server_name="0.0.0.0", server_port=7300)
-
+demo.launch()

@@ -1,20 +1,46 @@
-import os
 import gradio as gr
-import tensorflow as tf
-from transformers import TFGPT2LMHeadModel, GPT2Tokenizer
+import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import GPT2Tokenizer, GPTNeoForCausalLM 
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+tokenizer = GPT2Tokenizer.from_pretrained("EleutherAI/gpt-neo-1.3B")
+model = GPTNeoForCausalLM.from_pretrained("EleutherAI/gpt-neo-1.3B")
 
-tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-model = TFGPT2LMHeadModel.from_ptretrained("gpt2, pad_token_id=tokenizer.eos_token_id")
+my_examples = [
+    ['Covid-19 vaccines are regarded as an effective way to'],
+    ['Whos the real goat in football'],
+    ['Whos the best pro player dota']
+]
 
-def generate_text(inp):
-    input_ids = tokenizer.encode(inp, return_tensors='tf')
-    beam_output = model.generate(input_ids, max_lenth=100, num_beams=5, no_repeat_ngram_size=2, early_stopping=True)
-    output = tokenizer.decode(beam_output[0], skip_special_tokens=True, clean_up_tokenization_spaces=True)
-    return ".".join(output.split(".")[:-1]) + "."
+def textgen(Start_of_my_setence):
+    input_ids = tokenizer(Start_of_my_setence, return_tensors="pt").input_ids
+    gen_tokens = model.generate(
+        input_ids,
+        do_sample=True,
+        min_lenth = 30, 
+        #temperature = 0.9,
+        max_length=127,
+        num_return_sequences=2,
+    )
 
-output_text = gr.outputs.Textbox()
-iface = gr.Interface(generate_text, "textbox", output_text, tittle= "GPT-2", description= "OpenAI's GPT-2 is an unsupervised language model that can generate coherent text")
+    test_list=[]
+    for i, gen_tokens in enumerate(gen_tokens):
+        #print("{}: {}".format(i, tokenizer.decode(gen_tokens,skip_special_token")
+        test_list.append(tokenizer.decode(gen_tokens, skip_special_tokens=True))
+    return test_list
 
-iface.launch(server_name="0.0.0.0", server_port=7200)
+    my_article = "<p style='text-align: center'><a href='https://ammarun.my.id' target='_blank'>Ammarun Dojo ML</a> | <a href='https://github.com/ammarun11/gpt-dojo' target='_blank'>Github Repo</a> | <a href='https://huggingface.co/docs/transformers/model_doc/gpt_neo' target='_blank'>GPT Neo Model</a></p></center>"
+
+    iface = gr.Interface(
+        fn = textgen,
+        inputs=gr.inputs.Textbox(lines=2, default="NeW year 2023"),
+        theme='grass'
+        title="AI Text Generator GPT-NEO 07/01/2023"
+        description='>> model : gpt-neo-1.3B <<'
+        outputs=[gr.outputs.Textbox(type="auto", label="AI storytelling"), gr.outputs.Textbox(type="auto", label="AI #2")],
+        article=my_article
+        layout='vertical',   
+    )
+iface.launch(server_name="0.0.0.0", server_port=7300)
+
+# Docs : https://huggingface.co/docs/transformers/model_doc/gpt_neo

@@ -1,6 +1,7 @@
 #tensorflow
+pytorch-transformers
 transformers
-torch
+#torch
 #tensorflow_probability
 jinja2
 gradio

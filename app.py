@@ -34,11 +34,11 @@ def textgen(Start_of_my_setence):
     iface = gr.Interface(
         fn = textgen,
         inputs=gr.inputs.Textbox(lines=2, default="NeW year 2023"),
-        theme='grass'
-        title="AI Text Generator GPT-NEO 07/01/2023"
-        description='>> model : gpt-neo-1.3B <<'
+        theme='grass',
+        title="AI Text Generator GPT-NEO 07/01/2023",
+        description='>> model : gpt-neo-1.3B <<',
         outputs=[gr.outputs.Textbox(type="auto", label="AI storytelling"), gr.outputs.Textbox(type="auto", label="AI #2")],
-        article=my_article
+        article=my_article,
         layout='vertical',   
     )
 iface.launch(server_name="0.0.0.0", server_port=7300)

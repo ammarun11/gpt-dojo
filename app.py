@@ -14,8 +14,6 @@ demo = gr.Interface.load(
     title="Ammar Test GPT-J-6B",
     examples = my_examples,
 )
-demo.launch(server_name="0.0.0.0", server_port=7400)
 
-if __name__ == "__main__":
-    demo.launch()
+demo.launch(server_name="0.0.0.0", server_port=7400)
 

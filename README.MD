@@ -33,13 +33,13 @@ python app.py
 1. Build container (uncomment launch call in app.py)
 
 ```
-docker build --tag palopalepalo/gpt-j-text-generator:v1 .
+docker build --tag palopalepalo/gpt-j-question-answering:v1 .
 ```
 
 2. Run container
 
 ```
-docker run -it -d --name gpt-j-text-generator -p 7400:7400  palopalepalo/gpt-j-text-generator:v1
+docker run -it -d --name gpt-j-question-answering -p 7500:7500  palopalepalo/gpt-j-question-answering:v1
 ```
 
 ## Structure

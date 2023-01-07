@@ -9,4 +9,4 @@ RUN pip install -r requirements.txt \
 
 COPY . .
 
-ENTRYPOINT ["python", "app2.py"]
+ENTRYPOINT ["python", "app3.py"]
